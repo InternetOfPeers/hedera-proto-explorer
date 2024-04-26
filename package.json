@@ -1,0 +1,14 @@
+{
+  "name": "hedera-proto-explorer",
+  "version": "1.0.0",
+  "description": "Explore the details of the Hedera transactions",
+  "main": "proto-decode-transaction.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "protobufjs": "^7.2.6"
+  }
+}
