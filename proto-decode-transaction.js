@@ -8,11 +8,14 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
   let buffer = fs.readFileSync(argv("record")); // example "./record/2024-04-25T21_17_08.000248496Z.rcd"
 
   let verification = recordStreamFileMessage.verify(buffer);
-  //console.log(verification == null ? "Verification OK" : "Verification KO");
+  //console.debug(verification == null ? "Verification OK" : "Verification KO");
   let record = recordStreamFileMessage.decode(buffer);
   let recordJSON = record.toJSON();
+  //console.debug("=== Record file ===");
+  //console.debug(recordJSON)
+  //console.debug(Object.entries(recordJSON).filter((el) => el[0] !== "recordStreamItems"))
+  //console.debug("");
 
-  //console.trace(recordJSON.recordStreamItems);
   let tx = recordJSON.recordStreamItems.find(
     (el) => el.record.transactionHash === argv("txhash") // base64, not the hex format. i.e. ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+
   );
@@ -31,24 +34,27 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
 
   let transaction = transactionMessage.decode(buffer);
   let transactionJSON = transaction.toJSON();
-  //console.debug("signedTransactionBytes:")
-  //console.debug(transactionJSON)
-  //console.debug("")
+  console.log("transaction.signedTransactionBytes (decoded):")
+  console.deepLog(transactionJSON)
+  console.log("")
 
   //============================== Find the transaction's signatures
   console.log("=== Signatures ===");
-  //console.debug(transactionJSON.sigMap);
-  transactionJSON.sigMap.sigPair.forEach((signature) => {
-    signatureArrayBuffer = base64ToArrayBuffer(signature.pubKeyPrefix);
-    signatureBuffer = Buffer.from(signatureArrayBuffer);
-    pubKeyPrefixHex = Buffer.from(
-      signatureBuffer.buffer,
-      signatureBuffer.byteOffset,
-      signatureBuffer.byteLength
-    ).toString("hex");
-    signature.pubKeyPrefixHex = pubKeyPrefixHex;
-    console.log(signature);
-  });
+  if (transactionJSON.sigMap) {
+    transactionJSON.sigMap.sigPair.forEach((signature) => {
+      if (signature.pubKeyPrefix) {
+        signatureArrayBuffer = base64ToArrayBuffer(signature.pubKeyPrefix);
+        signatureBuffer = Buffer.from(signatureArrayBuffer);
+        pubKeyPrefixHex = Buffer.from(
+          signatureBuffer.buffer,
+          signatureBuffer.byteOffset,
+          signatureBuffer.byteLength
+        ).toString("hex");
+        signature.pubKeyPrefixHex = pubKeyPrefixHex;
+      }
+      console.log(signature);
+    });
+  }
   console.log("");
 
   //============================== Find the transaction's body
@@ -65,6 +71,7 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
 });
 
 function base64ToArrayBuffer(base64) {
+  //console.debug("base64", base64);
   var binaryString = atob(base64);
   var bytes = new Uint8Array(binaryString.length);
   for (var i = 0; i < binaryString.length; i++) {

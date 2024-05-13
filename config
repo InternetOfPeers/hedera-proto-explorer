@@ -1,0 +1,6 @@
+# This file is imported with `source`
+HPE_ROOT_DATA_FOLDER="."
+HPE_RECORDS_ROOT_FOLDER=$HPE_ROOT_DATA_FOLDER"/records"
+HPE_LOGGING_FOLDER=$HPE_ROOT_DATA_FOLDER"/logs"
+HPE_S3_RECORD_SOURCE_FOLDER="recordstreams"
+HPE_S3_BUCKET_NAME="hedera-mainnet-streams"
