@@ -20,45 +20,40 @@ protobuf.load("hedera-protobufs-static/streams/record_stream_file.proto", functi
     (el) => el.record.transactionHash === argv("txhash") // base64, not the hex format. i.e. ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+
   );
 
-  let txHash = tx.record.transactionHash;
-  let txNonce = tx.record.transactionID.nonce ? tx.record.transactionID.nonce : 0;
+  let txHash = tx.record.transactionHash
+  let txHashHex = base64ToHex(txHash)
+  let txNonce = tx.record.transactionID.nonce ? tx.record.transactionID.nonce : 0
 
-  console.log(`=== Transaction #${txNonce} ${txHash} ===`);
+  console.log(`=== Transaction #${txNonce} ${txHash} ${txHashHex} ===`);
   console.deepLog(tx);
   console.log("");
 
-  buffer = Buffer.from(
-    base64ToArrayBuffer(tx.transaction.signedTransactionBytes)
-  );
+  let transactionJSON = tx.transaction
 
-  let transactionMessage = root.lookupType("proto.SignedTransaction");
-  verification = transactionMessage.verify(buffer);
-  //console.debug("=== Transaction verification", verification == null ? "OK" : "KO", "===");
-
-  let transaction = transactionMessage.decode(buffer);
-  let transactionJSON = transaction.toJSON();
-  //console.debug("transaction.signedTransactionBytes (decoded):")
-  //console.deepLog(transactionJSON)
-  //console.debug("")
+  if (tx.transaction.signedTransactionBytes) {
+    // New format
+    buffer = Buffer.from(
+      base64ToArrayBuffer(tx.transaction.signedTransactionBytes)
+    );
+    let transactionMessage = root.lookupType("proto.SignedTransaction")
+    verification = transactionMessage.verify(buffer)
+    //console.debug("=== Transaction verification", verification == null ? "OK" : "KO", "===")
+    let transaction = transactionMessage.decode(buffer)
+    transactionJSON = transaction.toJSON()
+    //console.debug("transaction.signedTransactionBytes (decoded):")
+    //console.deepLog(transactionJSON)
+    //console.debug("")
+  }
 
   //============================== Find the transaction's signatures
-  console.log(`=== Signatures #${txNonce} ${txHash} ===`);
+  console.log(`=== Signatures #${txNonce} ${txHash} ${txHashHex} ===`);
   if (transactionJSON.sigMap) {
     transactionJSON.sigMap.sigPair.forEach((signature) => {
-      if (signature.pubKeyPrefix) {
-        signatureArrayBuffer = base64ToArrayBuffer(signature.pubKeyPrefix);
-        signatureBuffer = Buffer.from(signatureArrayBuffer);
-        pubKeyPrefixHex = Buffer.from(
-          signatureBuffer.buffer,
-          signatureBuffer.byteOffset,
-          signatureBuffer.byteLength
-        ).toString("hex");
-        signature.pubKeyPrefixHex = pubKeyPrefixHex;
-      }
-      console.log(signature);
+      if (signature.pubKeyPrefix) signature.pubKeyPrefixHex = base64ToHex(signature.pubKeyPrefix)
+      console.log(signature)
     });
   }
-  console.log("");
+  console.log("")
 
   //============================== Find the transaction's body
   let transactionBodyProtoBuffer = Buffer.from(
@@ -68,7 +63,7 @@ protobuf.load("hedera-protobufs-static/streams/record_stream_file.proto", functi
   verification = transactionBody.verify(buffer);
   //console.debug("=== Body verification", verification == null ? "OK" : "KO", "===");
 
-  console.log(`=== Body #${txNonce} ${txHash} ===`);
+  console.log(`=== Body #${txNonce} ${txHash} ${txHashHex} ===`);
   let body = transactionBody.decode(transactionBodyProtoBuffer);
   let bodyJSON = body.toJSON()
   console.deepLog(bodyJSON)
@@ -91,6 +86,12 @@ function base64ToArrayBuffer(base64) {
     bytes[i] = binaryString.charCodeAt(i);
   }
   return bytes.buffer;
+}
+
+function base64ToHex(base64) {
+  arrayBuffer = base64ToArrayBuffer(base64)
+  buffer = Buffer.from(arrayBuffer)
+  return Buffer.from(buffer.buffer, buffer.byteOffset, buffer.byteLength).toString("hex")
 }
 
 console.deepLog = (...args) =>
