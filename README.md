@@ -2,6 +2,8 @@
 
 IMPORTANT ASSUMPTION: this procedure does not verify the signatures associated to the tx, nor that the downloaded record file and corresponding txs hashes! If you want to query a verified data source, use your own mirror node to download and verify the signatures associated to the record file.
 
+You need to configure [AWS CLI](https://aws.amazon.com/cli/) with your credential for this tool to work correctly; it downloads files from ASW S3.
+
 ## How to get transactions details via script
 
 The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
