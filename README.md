@@ -4,6 +4,8 @@ IMPORTANT ASSUMPTION: this procedure does not verify the signatures associated t
 
 ## How to get transactions details via script
 
+The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
+
 Run the following script:
 
 ```bash
@@ -107,8 +109,6 @@ By default the script does not download the record file if it is already present
 ```bash
 ./examine.sh 0.0.513587-1714079813-090631706 overwrite-if-present
 ```
-
-The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
 
 If you want to change the default values, edit the `config` file.
 
