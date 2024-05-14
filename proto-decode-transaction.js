@@ -3,10 +3,10 @@ var fs = require("fs");
 
 protobuf.load("hedera/record_stream_file.proto", function (err, root) {
   if (err) throw err;
-
+  //console.debug("record", argv("record"))
+  //console.debug("txhash", argv("txhash"))
   let recordStreamFileMessage = root.lookupType("proto.RecordStreamFile");
   let buffer = fs.readFileSync(argv("record")); // example "./record/2024-04-25T21_17_08.000248496Z.rcd"
-
   let verification = recordStreamFileMessage.verify(buffer);
   //console.debug(verification == null ? "Verification OK" : "Verification KO");
   let record = recordStreamFileMessage.decode(buffer);
@@ -20,7 +20,10 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
     (el) => el.record.transactionHash === argv("txhash") // base64, not the hex format. i.e. ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+
   );
 
-  console.log("=== Transaction ===");
+  let txHash = tx.record.transactionHash;
+  let txNonce = tx.record.transactionID.nonce ? tx.record.transactionID.nonce : 0;
+
+  console.log(`=== Transaction #${txNonce} ${txHash} ===`);
   console.deepLog(tx);
   console.log("");
 
@@ -34,12 +37,12 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
 
   let transaction = transactionMessage.decode(buffer);
   let transactionJSON = transaction.toJSON();
-  console.log("transaction.signedTransactionBytes (decoded):")
-  console.deepLog(transactionJSON)
-  console.log("")
+  //console.debug("transaction.signedTransactionBytes (decoded):")
+  //console.deepLog(transactionJSON)
+  //console.debug("")
 
   //============================== Find the transaction's signatures
-  console.log("=== Signatures ===");
+  console.log(`=== Signatures #${txNonce} ${txHash} ===`);
   if (transactionJSON.sigMap) {
     transactionJSON.sigMap.sigPair.forEach((signature) => {
       if (signature.pubKeyPrefix) {
@@ -65,9 +68,18 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
   verification = transactionBody.verify(buffer);
   //console.debug("=== Body verification", verification == null ? "OK" : "KO", "===");
 
-  console.log("=== Body ==");
+  console.log(`=== Body #${txNonce} ${txHash} ===`);
   let body = transactionBody.decode(transactionBodyProtoBuffer);
-  console.deepLog(body);
+  let bodyJSON = body.toJSON()
+  console.deepLog(bodyJSON);
+  console.log("");
+
+  //============================== Custom data based on transaction type
+  if (bodyJSON.consensusSubmitMessage) {
+    console.log("Message payload decoded from base64:")
+    console.log(atob(bodyJSON.consensusSubmitMessage.message))
+  }
+
 });
 
 function base64ToArrayBuffer(base64) {
@@ -84,6 +96,7 @@ console.deepLog = (...args) =>
   args.forEach((obj) =>
     console.log(require("util").inspect(obj, false, null, true))
   );
+
 const argv = (key) => {
   if (process.argv.includes(`--${key}`)) return true; // Return true if the key exists and a value is undefined
   const value = process.argv.find((element) => element.startsWith(`--${key}=`));

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is meant to be imported with `source` as a library for other bash scripts
-# Nice icons: # ☕ ℹ ★ 🚩 🏁 ⚐ ⚑ 🔽 🔼 ↧ ☝ ⛔ ⛶ ➕ + ✓ ✔ ⚠⚙
+# Nice icons: # ☕ ℹ ★ 🚩 🏁 ⚐ ⚑ 🔽 🔼 ↧ ☝ ⛔ ⛶ ➕ + ✓ ✔ ⚠ ⚙
 source $(dirname "$0")/config   # the path refers to the initial script in the root, not to the common.sh folder
 
 function init_working_folders()
