@@ -1,7 +1,7 @@
 var protobuf = require("protobufjs");
 var fs = require("fs");
 
-protobuf.load("hedera/record_stream_file.proto", function (err, root) {
+protobuf.load("hedera-protobufs-static/streams/record_stream_file.proto", function (err, root) {
   if (err) throw err;
   //console.debug("record", argv("record"))
   //console.debug("txhash", argv("txhash"))
