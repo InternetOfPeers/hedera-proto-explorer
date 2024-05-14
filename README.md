@@ -2,7 +2,7 @@
 
 IMPORTANT ASSUMPTION: this procedure does not verify the signatures associated to the tx, nor that the downloaded record file and corresponding txs hashes! If you want to query a verified data source, use your own mirror node to download and verify the signatures associated to the record file.
 
-You need to configure [AWS CLI](https://aws.amazon.com/cli/) with your credentials for this tool to work correctly; it downloads files from ASW S3.
+You need to configure [AWS CLI](https://aws.amazon.com/cli/) with your credentials for this tool to work correctly; it downloads files from AWS S3.
 
 ## How to get transactions details via script
 
