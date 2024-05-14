@@ -239,12 +239,28 @@ If you want to change the default values, edit the `config` file.
       }
     }
     ```
+
 ## Utils
 
 Convert tx hash from base64 (MN API output) to hex (HashScan and MN API input)
 
 ```zsh
-$ echo "pPcK5zG1wfQqqd29LJOtp8HKof/OLSzdMA+rhBVLKmu4Tl0CfwDFLreHkXnAequi" | base64 -d | perl -pe 'BEGIN{$/=\1e6} $_=unpack "H*"'
+❯ echo "pPcK5zG1wfQqqd29LJOtp8HKof/OLSzdMA+rhBVLKmu4Tl0CfwDFLreHkXnAequi" | base64 -d | perl -pe 'BEGIN{$/=\1e6} $_=unpack "H*"'
 
 a4f70ae731b5c1f42aa9ddbd2c93ada7c1caa1ffce2d2cdd300fab84154b2a6bb84e5d027f00c52eb7879179c07aaba2
+```
+
+Query a consensus node about account's balance
+
+```zsh
+❯ grpcurl -import-path ./hedera-protobufs-static/services -proto=crypto_service.proto --plaintext -d '{"cryptogetAccountBalance":{"header":{"responseType":0},"accountID":{"accountNum":2}}}' 34.125.200.96:50211 proto.CryptoService/cryptoGetBalance
+{
+  "cryptogetAccountBalance": {
+    "header": {},
+    "accountID": {
+      "accountNum": "2"
+    },
+    "balance": "1662808162851446"
+  }
+}
 ```
