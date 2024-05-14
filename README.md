@@ -237,3 +237,12 @@ If you want to change the default values, edit the `config` file.
       }
     }
     ```
+## Utils
+
+Convert tx hash from base64 (MN API output) to hex (HashScan and MN API input)
+
+```zsh
+$ echo "pPcK5zG1wfQqqd29LJOtp8HKof/OLSzdMA+rhBVLKmu4Tl0CfwDFLreHkXnAequi" | base64 -d | perl -pe 'BEGIN{$/=\1e6} $_=unpack "H*"'
+
+a4f70ae731b5c1f42aa9ddbd2c93ada7c1caa1ffce2d2cdd300fab84154b2a6bb84e5d027f00c52eb7879179c07aaba2
+```
