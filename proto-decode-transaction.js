@@ -71,13 +71,14 @@ protobuf.load("hedera/record_stream_file.proto", function (err, root) {
   console.log(`=== Body #${txNonce} ${txHash} ===`);
   let body = transactionBody.decode(transactionBodyProtoBuffer);
   let bodyJSON = body.toJSON()
-  console.deepLog(bodyJSON);
-  console.log("");
+  console.deepLog(bodyJSON)
+  console.log("")
 
   //============================== Custom data based on transaction type
   if (bodyJSON.consensusSubmitMessage) {
-    console.log("Message payload decoded from base64:")
+    console.log("=== Message payload decoded from base64 ===")
     console.log(atob(bodyJSON.consensusSubmitMessage.message))
+    console.log("")
   }
 
 });

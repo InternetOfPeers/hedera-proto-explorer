@@ -13,15 +13,16 @@ Run the following script:
 The output will be:
 
 ```bash
-2024-05-13T18:15:11.204Z-15456 ⚑ Started ./examine.sh (PID 15456) with the following configuration
-2024-05-13T18:15:11.205Z-15456 ⛶ Transaction ID .......................: 0.0.513587-1714079813-090631706
-2024-05-13T18:15:11.205Z-15456 ⛶ Records folder .......................: ./records
-2024-05-13T18:15:11.207Z-15456 ⛶ Transactions details in ..............: ./logs/0.0.1872027-1715617273-901905148.txt
-2024-05-13T18:15:11.208Z-15456 ✔ Created folder ./records
-2024-05-13T18:15:11.210Z-15456 ✔ Created folder ./logs
-2024-05-13T18:15:11.445Z-15456 ☕ Downloading recordstreams/record0.0.3/2024-04-25T21_17_08.000248496Z.rcd.gz
-bytes   800018  binary/octet-stream     "a88a4de02cfc283c9bb8f53473d5e875"      2024-04-25T21:17:15+00:00       COMPLETED        requester       AES256  z3SIH.ypHpLh1BLugG6JA3W7DdFcxbMH
-=== Transaction ===
+2024-05-14T01:56:58.411Z-18059 ⚑ Started ./examine.sh (PID 18059) with the following configuration
+2024-05-14T01:56:58.412Z-18059 ⛶ Transaction ID .......................: 0.0.513587-1714079813-090631706
+2024-05-14T01:56:58.412Z-18059 ⛶ Records folder .......................: ./records
+2024-05-14T01:56:58.413Z-18059 ✔ Created folder ./records
+2024-05-14T01:56:58.415Z-18059 ✔ Created folder ./logs
+2024-05-14T01:56:58.501Z-18059 ⚙ Transactions with the same ID: 1
+2024-05-14T01:56:58.612Z-18059 ☕ Downloading recordstreams/record0.0.3/2024-04-25T21_17_08.000248496Z.rcd.gz
+bytes	800018	binary/octet-stream	"a88a4de02cfc283c9bb8f53473d5e875"	2024-04-25T21:17:15+00:00	COMPLETED	requester	AES256	z3SIH.ypHpLh1BLugG6JA3W7DdFcxbMH
+
+=== Transaction #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
 {
   transaction: {
     signedTransactionBytes: 'ClgKGQoLCMWQq7EGEJrcmysSCAgAEAAYs6wfGAASBggAEAAYAxiAhK9fIgIIeDIAggMnEiUKCQgAEAAY0ciIAhIICAAQABizrB8aCQgAEAAYxaHpASID9vUBEswBCmQKIHcoN6wujR2qXjZWVOxzYBEP6a9i8khL0gIgT2JuXIKyGkDu761b22vDr/chkr5qaR/QqXPIdV2Y08/9S11nlChfAlMXZj0jIWgvFyN25CXzGB4rw+KhwOU8jPpnF3d+pBYACmQKIJUSLeJ3nu+RKNA7rsFMFMNOlg2U59HkwXbTZQS+/kh7GkDgkkcbbok6JZVz6dGgmaXQPTEz66X6EcvKx3BQID+b/BbwSaA6G9114w+olR3jqrIv2gMIAFkH6a+eexzVbCMK'
@@ -60,7 +61,7 @@ bytes   800018  binary/octet-stream     "a88a4de02cfc283c9bb8f53473d5e875"      
   }
 }
 
-=== Signatures ===
+=== Signatures #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
 {
   pubKeyPrefix: 'dyg3rC6NHapeNlZU7HNgEQ/pr2LySEvSAiBPYm5cgrI=',
   ed25519: '7u+tW9trw6/3IZK+amkf0KlzyHVdmNPP/UtdZ5QoXwJTF2Y9IyFoLxcjduQl8xgeK8PiocDlPIz6Zxd3fqQWAA==',
@@ -72,54 +73,31 @@ bytes   800018  binary/octet-stream     "a88a4de02cfc283c9bb8f53473d5e875"      
   pubKeyPrefixHex: '95122de2779eef9128d03baec14c14c34e960d94e7d1e4c176d36504befe487b'
 }
 
-=== Body ==
-TransactionBody {
-  transactionID: TransactionID {
-    transactionValidStart: Timestamp {
-      seconds: Long { low: 1714079813, high: 0, unsigned: false },
-      nanos: 90631706
-    },
-    accountID: AccountID {
-      shardNum: Long { low: 0, high: 0, unsigned: false },
-      realmNum: Long { low: 0, high: 0, unsigned: false },
-      accountNum: Long { low: 513587, high: 0, unsigned: false }
-    },
+=== Body #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
+{
+  transactionID: {
+    transactionValidStart: { seconds: '1714079813', nanos: 90631706 },
+    accountID: { shardNum: '0', realmNum: '0', accountNum: '513587' },
     scheduled: false
   },
-  nodeAccountID: AccountID {
-    shardNum: Long { low: 0, high: 0, unsigned: false },
-    realmNum: Long { low: 0, high: 0, unsigned: false },
-    accountNum: Long { low: 3, high: 0, unsigned: false }
-  },
-  transactionFee: Long { low: 200000000, high: 0, unsigned: true },
-  transactionValidDuration: Duration { seconds: Long { low: 120, high: 0, unsigned: false } },
+  nodeAccountID: { shardNum: '0', realmNum: '0', accountNum: '3' },
+  transactionFee: '200000000',
+  transactionValidDuration: { seconds: '120' },
   memo: '',
-  cryptoApproveAllowance: CryptoApproveAllowanceTransactionBody {
-    cryptoAllowances: [],
+  cryptoApproveAllowance: {
     nftAllowances: [
-      NftAllowance {
-        serialNumbers: [ Long { low: 31478, high: 0, unsigned: false } ],
-        tokenId: TokenID {
-          shardNum: Long { low: 0, high: 0, unsigned: false },
-          realmNum: Long { low: 0, high: 0, unsigned: false },
-          tokenNum: Long { low: 4334673, high: 0, unsigned: false }
-        },
-        owner: AccountID {
-          shardNum: Long { low: 0, high: 0, unsigned: false },
-          realmNum: Long { low: 0, high: 0, unsigned: false },
-          accountNum: Long { low: 513587, high: 0, unsigned: false }
-        },
-        spender: AccountID {
-          shardNum: Long { low: 0, high: 0, unsigned: false },
-          realmNum: Long { low: 0, high: 0, unsigned: false },
-          accountNum: Long { low: 3821765, high: 0, unsigned: false }
-        }
+      {
+        tokenId: { shardNum: '0', realmNum: '0', tokenNum: '4334673' },
+        owner: { shardNum: '0', realmNum: '0', accountNum: '513587' },
+        spender: { shardNum: '0', realmNum: '0', accountNum: '3821765' },
+        serialNumbers: [ '31478' ]
       }
-    ],
-    tokenAllowances: []
+    ]
   }
 }
-2024-05-13T18:15:13.457Z-15456 🏁 Script ./examine.sh (PID 15456) ended
+
+2024-05-14T01:57:00.313Z-18059 ✔ Transactions details in ./logs/0.0.513587-1714079813-090631706.txt
+2024-05-14T01:57:00.313Z-18059 🏁 Script ./examine.sh (PID 18059) ended
 ```
 
 The output will be also saved in the default logs folder.
@@ -130,6 +108,8 @@ By default the script does not download the record file if it is already present
 ./examine.sh 0.0.513587-1714079813-090631706 overwrite-if-present
 ```
 
+The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
+
 If you want to change the default values, edit the `config` file.
 
 ## How to manually get transactions details
@@ -138,7 +118,11 @@ If you want to change the default values, edit the `config` file.
 
     ```zsh
     curl -s https://mainnet-public.mirrornode.hedera.com/api/v1/transactions/0.0.513587-1714079813-090631706 | jq '.transactions[] | { consensus_timestamp, transaction_hash}'
+    ```
 
+    The output will be:
+
+    ```json
     {
       "consensus_timestamp": "1714079829.044599703",
       "transaction_hash": "ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+"
@@ -148,8 +132,13 @@ If you want to change the default values, edit the `config` file.
 1. Then, you want the record file containing that tx
 
     ```zsh
-    curl -s "https://mainnet-public.mirrornode.hedera.com/api/v1/blocks?limit=1&order=asc&timestamp=gte:1714079829.044599703" | jq ".blocks[].name"
-    "2024-04-25T21_17_08.000248496Z.rcd.gz"
+    curl -s "https://mainnet-public.mirrornode.hedera.com/api/v1/blocks?limit=1&order=asc&timestamp=gte:1714079829.044599703" | jq -r ".blocks[].name"
+    ```
+
+    The output will be:
+
+    ```text
+    2024-04-25T21_17_08.000248496Z.rcd.gz
     ```
 
 1. Then you download the record file. Note: if 0.0.3 does not have that file, try 0.0.4, 0.0.5, and so on.
@@ -169,8 +158,12 @@ If you want to change the default values, edit the `config` file.
 
     ```zsh
     node proto-decode-transaction.js --record=./records/2024-04-25T21_17_08.000248496Z.rcd --txhash=ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+
+    ```
 
-    === Transaction ===
+    The output will be:
+
+    ```text
+    === Transaction #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
     {
       transaction: {
         signedTransactionBytes: 'ClgKGQoLCMWQq7EGEJrcmysSCAgAEAAYs6wfGAASBggAEAAYAxiAhK9fIgIIeDIAggMnEiUKCQgAEAAY0ciIAhIICAAQABizrB8aCQgAEAAYxaHpASID9vUBEswBCmQKIHcoN6wujR2qXjZWVOxzYBEP6a9i8khL0gIgT2JuXIKyGkDu761b22vDr/chkr5qaR/QqXPIdV2Y08/9S11nlChfAlMXZj0jIWgvFyN25CXzGB4rw+KhwOU8jPpnF3d+pBYACmQKIJUSLeJ3nu+RKNA7rsFMFMNOlg2U59HkwXbTZQS+/kh7GkDgkkcbbok6JZVz6dGgmaXQPTEz66X6EcvKx3BQID+b/BbwSaA6G9114w+olR3jqrIv2gMIAFkH6a+eexzVbCMK'
@@ -209,7 +202,7 @@ If you want to change the default values, edit the `config` file.
       }
     }
 
-    === Signatures ===
+    === Signatures #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
     {
       pubKeyPrefix: 'dyg3rC6NHapeNlZU7HNgEQ/pr2LySEvSAiBPYm5cgrI=',
       ed25519: '7u+tW9trw6/3IZK+amkf0KlzyHVdmNPP/UtdZ5QoXwJTF2Y9IyFoLxcjduQl8xgeK8PiocDlPIz6Zxd3fqQWAA==',
@@ -221,51 +214,26 @@ If you want to change the default values, edit the `config` file.
       pubKeyPrefixHex: '95122de2779eef9128d03baec14c14c34e960d94e7d1e4c176d36504befe487b'
     }
 
-    === Body ==
-    TransactionBody {
-      transactionID: TransactionID {
-        transactionValidStart: Timestamp {
-          seconds: Long { low: 1714079813, high: 0, unsigned: false },
-          nanos: 90631706
-        },
-        accountID: AccountID {
-          shardNum: Long { low: 0, high: 0, unsigned: false },
-          realmNum: Long { low: 0, high: 0, unsigned: false },
-          accountNum: Long { low: 513587, high: 0, unsigned: false }
-        },
+    === Body #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
+    {
+      transactionID: {
+        transactionValidStart: { seconds: '1714079813', nanos: 90631706 },
+        accountID: { shardNum: '0', realmNum: '0', accountNum: '513587' },
         scheduled: false
       },
-      nodeAccountID: AccountID {
-        shardNum: Long { low: 0, high: 0, unsigned: false },
-        realmNum: Long { low: 0, high: 0, unsigned: false },
-        accountNum: Long { low: 3, high: 0, unsigned: false }
-      },
-      transactionFee: Long { low: 200000000, high: 0, unsigned: true },
-      transactionValidDuration: Duration { seconds: Long { low: 120, high: 0, unsigned: false } },
+      nodeAccountID: { shardNum: '0', realmNum: '0', accountNum: '3' },
+      transactionFee: '200000000',
+      transactionValidDuration: { seconds: '120' },
       memo: '',
-      cryptoApproveAllowance: CryptoApproveAllowanceTransactionBody {
-        cryptoAllowances: [],
+      cryptoApproveAllowance: {
         nftAllowances: [
-          NftAllowance {
-            serialNumbers: [ Long { low: 31478, high: 0, unsigned: false } ],
-            tokenId: TokenID {
-              shardNum: Long { low: 0, high: 0, unsigned: false },
-              realmNum: Long { low: 0, high: 0, unsigned: false },
-              tokenNum: Long { low: 4334673, high: 0, unsigned: false }
-            },
-            owner: AccountID {
-              shardNum: Long { low: 0, high: 0, unsigned: false },
-              realmNum: Long { low: 0, high: 0, unsigned: false },
-              accountNum: Long { low: 513587, high: 0, unsigned: false }
-            },
-            spender: AccountID {
-              shardNum: Long { low: 0, high: 0, unsigned: false },
-              realmNum: Long { low: 0, high: 0, unsigned: false },
-              accountNum: Long { low: 3821765, high: 0, unsigned: false }
-            }
+          {
+            tokenId: { shardNum: '0', realmNum: '0', tokenNum: '4334673' },
+            owner: { shardNum: '0', realmNum: '0', accountNum: '513587' },
+            spender: { shardNum: '0', realmNum: '0', accountNum: '3821765' },
+            serialNumbers: [ '31478' ]
           }
-        ],
-        tokenAllowances: []
+        ]
       }
     }
-```
+    ```

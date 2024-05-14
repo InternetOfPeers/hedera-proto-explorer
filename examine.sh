@@ -4,11 +4,11 @@
 source $(dirname "$0")/utils/common.sh
 
 # Check parameters
-test -z "$1" && echo "Specify a transaction ID (i.e. 0.0.1872027-1715617273-901905148) as first parameter" && exit 100
+test -z "$1" && echo "Specify a valid transaction ID (i.e. 0.0.1872027-1715617273-901905148) as first parameter" && exit 100
 FORCE_DOWNLOAD="false"
 test "$2" == "overwrite-if-present" && FORCE_DOWNLOAD="true"
 
-HPE_TXID="$1"
+HPE_TXID=$(echo $1 | sed -r "s/@(.*[0-9])\./-\1-/")
 HPE_TXID_LOGFILE="$HPE_LOGGING_FOLDER/$HPE_TXID.txt"
 HPE_TXID_LOGFILE_COLOR="$HPE_LOGGING_FOLDER/$HPE_TXID.txt.color"
 
