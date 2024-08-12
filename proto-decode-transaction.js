@@ -13,15 +13,18 @@ protobuf.load(
     //console.debug(verification == null ? "Verification OK" : "Verification KO");
     let record = recordStreamFileMessage.decode(buffer);
     let recordJSON = record.toJSON();
-    //console.debug("=== Record file ===");
-    //console.debug(recordJSON)
-    //console.debug(Object.entries(recordJSON).filter((el) => el[0] !== "recordStreamItems"))
-    //console.debug("");
+    // console.debug("=== Record file ===");
+    // console.deepLog(recordJSON);
+    // console.debug(
+    //   Object.entries(recordJSON).filter((el) => el[0] !== "recordStreamItems")
+    // );
+    // console.debug("");
 
-    console.log(`>>> Searching for ${argv("txhash")}`);
-    let tx = recordJSON.recordStreamItems.find(
-      (el) => el.record.transactionHash === argv("txhash") // base64, not the hex format. i.e. ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+
-    );
+    //console.log(`>>> Searching for ${argv("txhash")}`);
+    let tx = recordJSON.recordStreamItems.find((el) => {
+      //console.debug(el.record.transactionHash);
+      return el.record.transactionHash === argv("txhash"); // base64, not the hex format. i.e. ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+
+    });
 
     if (tx != undefined) {
       let txHash = tx.record.transactionHash;
@@ -83,9 +86,12 @@ protobuf.load(
         console.log("");
       }
     } else {
-      console.log("!!!");
-      console.log(`!!! Cannot find tx ${argv("txhash")}`);
-      console.log("!!!");
+      console.log("=== Transaction", argv("txhash"), "NOT FOUND!!!");
+      console.log("");
+      console.log(
+        "If it is a scheduled transaction it is probably in another record file."
+      );
+      console.log("");
     }
   }
 );
