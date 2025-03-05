@@ -17,16 +17,16 @@ Run the following script:
 The output will be:
 
 ```bash
-2024-05-14T01:56:58.411Z-18059 ⚑ Started ./examine.sh (PID 18059) with the following configuration
-2024-05-14T01:56:58.412Z-18059 ⛶ Transaction ID .......................: 0.0.513587-1714079813-090631706
-2024-05-14T01:56:58.412Z-18059 ⛶ Records folder .......................: ./records
-2024-05-14T01:56:58.413Z-18059 ✔ Created folder ./records
-2024-05-14T01:56:58.415Z-18059 ✔ Created folder ./logs
-2024-05-14T01:56:58.501Z-18059 ⚙ Transactions with the same ID: 1
-2024-05-14T01:56:58.612Z-18059 ☕ Downloading recordstreams/record0.0.3/2024-04-25T21_17_08.000248496Z.rcd.gz
+❯ ./examine.sh 0.0.513587-1714079813-090631706
+2025-03-05T13:08:08.3NZ-3870 ⚑ Started ./examine.sh (PID 3870) with the following configuration
+2025-03-05T13:08:08.3NZ-3870 ⛶ Network ..............................: mainnet
+2025-03-05T13:08:08.3NZ-3870 ⛶ Transaction ID .......................: 0.0.513587-1714079813-090631706
+2025-03-05T13:08:08.3NZ-3870 ⛶ Records folder .......................: ./records
+2025-03-05T13:08:09.3NZ-3870 ⚙ Transactions with the same ID: 1
+2025-03-05T13:08:09.3NZ-3870 ☕ Downloading recordstreams/record0.0.3/2024-04-25T21_17_08.000248496Z.rcd.gz
 bytes	800018	binary/octet-stream	"a88a4de02cfc283c9bb8f53473d5e875"	2024-04-25T21:17:15+00:00	COMPLETED	requester	AES256	z3SIH.ypHpLh1BLugG6JA3W7DdFcxbMH
 
-=== Transaction #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
+=== Transaction #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ 01319c315d17ad89a22356691a6679979216e300b95c30758cee66f6a9409a65f25b7ba52d6ef0e593d9b6c6395f017e ===
 {
   transaction: {
     signedTransactionBytes: 'ClgKGQoLCMWQq7EGEJrcmysSCAgAEAAYs6wfGAASBggAEAAYAxiAhK9fIgIIeDIAggMnEiUKCQgAEAAY0ciIAhIICAAQABizrB8aCQgAEAAYxaHpASID9vUBEswBCmQKIHcoN6wujR2qXjZWVOxzYBEP6a9i8khL0gIgT2JuXIKyGkDu761b22vDr/chkr5qaR/QqXPIdV2Y08/9S11nlChfAlMXZj0jIWgvFyN25CXzGB4rw+KhwOU8jPpnF3d+pBYACmQKIJUSLeJ3nu+RKNA7rsFMFMNOlg2U59HkwXbTZQS+/kh7GkDgkkcbbok6JZVz6dGgmaXQPTEz66X6EcvKx3BQID+b/BbwSaA6G9114w+olR3jqrIv2gMIAFkH6a+eexzVbCMK'
@@ -65,7 +65,7 @@ bytes	800018	binary/octet-stream	"a88a4de02cfc283c9bb8f53473d5e875"	2024-04-25T2
   }
 }
 
-=== Signatures #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
+=== Signatures #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ 01319c315d17ad89a22356691a6679979216e300b95c30758cee66f6a9409a65f25b7ba52d6ef0e593d9b6c6395f017e ===
 {
   pubKeyPrefix: 'dyg3rC6NHapeNlZU7HNgEQ/pr2LySEvSAiBPYm5cgrI=',
   ed25519: '7u+tW9trw6/3IZK+amkf0KlzyHVdmNPP/UtdZ5QoXwJTF2Y9IyFoLxcjduQl8xgeK8PiocDlPIz6Zxd3fqQWAA==',
@@ -77,7 +77,7 @@ bytes	800018	binary/octet-stream	"a88a4de02cfc283c9bb8f53473d5e875"	2024-04-25T2
   pubKeyPrefixHex: '95122de2779eef9128d03baec14c14c34e960d94e7d1e4c176d36504befe487b'
 }
 
-=== Body #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ ===
+=== Body #0 ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+ 01319c315d17ad89a22356691a6679979216e300b95c30758cee66f6a9409a65f25b7ba52d6ef0e593d9b6c6395f017e ===
 {
   transactionID: {
     transactionValidStart: { seconds: '1714079813', nanos: 90631706 },
@@ -100,8 +100,8 @@ bytes	800018	binary/octet-stream	"a88a4de02cfc283c9bb8f53473d5e875"	2024-04-25T2
   }
 }
 
-2024-05-14T01:57:00.313Z-18059 ✔ Transactions details in ./logs/0.0.513587-1714079813-090631706.txt
-2024-05-14T01:57:00.313Z-18059 🏁 Script ./examine.sh (PID 18059) ended
+2025-03-05T13:08:16.3NZ-3870 ✔ Transactions details in ./logs/0.0.513587-1714079813-090631706.txt
+2025-03-05T13:08:16.3NZ-3870 🏁 Script ./examine.sh (PID 3870) ended
 ```
 
 The output will be also saved in the default logs folder.
@@ -110,6 +110,12 @@ By default the script does not download the record file if it is already present
 
 ```bash
 ./examine.sh 0.0.513587-1714079813-090631706 overwrite-if-present
+```
+
+You can also use a `testnet` parameter to switch network, like this:
+
+```bash
+./examine.sh 0.0.513587-1714079813-090631706 testnet
 ```
 
 If you want to change the default values, edit the `config` file.
