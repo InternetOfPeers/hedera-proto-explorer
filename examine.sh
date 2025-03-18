@@ -6,6 +6,8 @@ source $(dirname "$0")/utils/common.sh
 
 # Check parameters
 test -z "$1" && echo "Specify a valid transaction ID (i.e. 0.0.1872027-1715617273-901905148) as first parameter" && exit 100
+test "$2" == "mainnet" && HPE_NETWORK="mainnet"
+test "$3" == "mainnet" && HPE_NETWORK="mainnet"
 test "$2" == "testnet" && HPE_NETWORK="testnet"
 test "$3" == "testnet" && HPE_NETWORK="testnet"
 test "$2" == "overwrite-if-present" && HPE_FORCE_DOWNLOAD="true"
