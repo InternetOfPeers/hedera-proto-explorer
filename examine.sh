@@ -10,6 +10,8 @@ test "$2" == "mainnet" && HPE_NETWORK="mainnet"
 test "$3" == "mainnet" && HPE_NETWORK="mainnet"
 test "$2" == "testnet" && HPE_NETWORK="testnet"
 test "$3" == "testnet" && HPE_NETWORK="testnet"
+test "$2" == "previewnet" && HPE_NETWORK="previewnet"
+test "$3" == "previewnet" && HPE_NETWORK="previewnet"
 test "$2" == "overwrite-if-present" && HPE_FORCE_DOWNLOAD="true"
 test "$3" == "overwrite-if-present" && HPE_FORCE_DOWNLOAD="true"
 
@@ -17,14 +19,18 @@ test $HPE_NETWORK = "testnet" &&\
     HPE_MIRROR_NODE_API_BASE_URL=$HPE_TESTNET_MIRROR_NODE_API_BASE_URL &&\
     HPE_BUCKET_NAME=$HPE_TESTNET_BUCKET_NAME
 
+test $HPE_NETWORK = "previewnet" &&\
+    HPE_MIRROR_NODE_API_BASE_URL=$HPE_PREVIEWNET_MIRROR_NODE_API_BASE_URL &&\
+    HPE_BUCKET_NAME=$HPE_PREVIEWNET_BUCKET_NAME
+
 HPE_TXID=$(echo $1 | sed -r "s/@(.*[0-9])\./-\1-/")
-HPE_TXID_LOGFILE="$HPE_LOGGING_FOLDER/$HPE_TXID.txt"
-HPE_TXID_LOGFILE_COLOR="$HPE_LOGGING_FOLDER/$HPE_TXID.txt.color"
+HPE_TXID_LOGFILE="$HPE_LOGGING_FOLDER/$HPE_NETWORK/$HPE_TXID.txt"
+HPE_TXID_LOGFILE_COLOR="$HPE_LOGGING_FOLDER/$HPE_NETWORK/$HPE_TXID.txt.color"
 
 echo "$(print_timestamp) ⚑ Started $0 (PID $$) with the following configuration"
 echo "$(print_timestamp) ⛶ Network ..............................: $HPE_NETWORK"
 echo "$(print_timestamp) ⛶ Transaction ID .......................: $HPE_TXID"
-echo "$(print_timestamp) ⛶ Records folder .......................: $HPE_RECORDS_ROOT_FOLDER"
+echo "$(print_timestamp) ⛶ Records folder .......................: $HPE_RECORDS_ROOT_FOLDER/$HPE_NETWORK"
 
 init_working_folders
 
@@ -42,8 +48,8 @@ HPE_CONSENSUS_TIMESTAMP=$(echo $HPE_TRANSACTIONS | jq -r '.transactions[0].conse
 HPE_RECORDFILENAME_GZ=$(curl -s "$HPE_MIRROR_NODE_API_BASE_URL/blocks?limit=1&order=asc&timestamp=gte:$HPE_CONSENSUS_TIMESTAMP" | jq -r ".blocks[].name")
 
 HPE_RECORDFILENAME=${HPE_RECORDFILENAME_GZ%.gz}
-HPE_RECORDFILEPATH="./records/$HPE_RECORDFILENAME"
-HPE_RECORDFILEPATH_GZ="./records/$HPE_RECORDFILENAME_GZ"
+HPE_RECORDFILEPATH="$HPE_RECORDS_ROOT_FOLDER/$HPE_NETWORK/$HPE_RECORDFILENAME"
+HPE_RECORDFILEPATH_GZ="$HPE_RECORDS_ROOT_FOLDER/$HPE_NETWORK/$HPE_RECORDFILENAME_GZ"
 
 [ $HPE_FORCE_DOWNLOAD == "true" ] || [ ! -s "${HPE_RECORDFILEPATH}" ] &&\
     download_file $HPE_RECORD_SOURCE_FOLDER/$HPE_RECORDFILENAME_GZ $HPE_RECORDFILEPATH_GZ &&\
@@ -54,7 +60,7 @@ HPE_RECORDFILEPATH_GZ="./records/$HPE_RECORDFILENAME_GZ"
 echo "" > $HPE_TXID_LOGFILE
 echo "" > $HPE_TXID_LOGFILE_COLOR
 for HPE_TXHASH in $(echo $HPE_TRANSACTIONS | jq -r '.transactions[].transaction_hash'); do
-    node proto-decode-transaction.js --record=./records/$HPE_RECORDFILENAME --txhash=$HPE_TXHASH >> $HPE_TXID_LOGFILE_COLOR
+    node proto-decode-transaction.js --record=$HPE_RECORDFILEPATH --txhash=$HPE_TXHASH >> $HPE_TXID_LOGFILE_COLOR
 done
 cat $HPE_TXID_LOGFILE_COLOR | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g" > $HPE_TXID_LOGFILE
 cat $HPE_TXID_LOGFILE_COLOR

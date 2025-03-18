@@ -1,11 +1,11 @@
 # This file is imported with `source`
-HPE_NETWORK="mainnet"           # mainnet, testnet
+HPE_NETWORK="mainnet"           # mainnet, testnet, previewnet
 HPE_FORCE_DOWNLOAD="false"      # true, false
 HPE_STORAGE_PROVIDER="aws"      # aws, gcp
 HPE_GCP_BILLING_PROJECT_ID=""   # GCP billing project ID
 HPE_ROOT_DATA_FOLDER="."
 HPE_RECORDS_ROOT_FOLDER=$HPE_ROOT_DATA_FOLDER"/records"
-HPE_LOGGING_FOLDER=$HPE_ROOT_DATA_FOLDER"/logs/$HPE_NETWORK"
+HPE_LOGGING_FOLDER=$HPE_ROOT_DATA_FOLDER"/logs"
 HPE_RECORD_SOURCE_FOLDER="recordstreams/record0.0.3"
 HPE_BUCKET_NAME="hedera-mainnet-streams"
 HPE_MIRROR_NODE_API_BASE_URL="https://mainnet-public.mirrornode.hedera.com/api/v1"

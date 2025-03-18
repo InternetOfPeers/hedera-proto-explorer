@@ -6,8 +6,12 @@ source $(dirname "$0")/config   # the path refers to the initial script in the r
 function init_working_folders()
 {
     create_folder_if_not_present $HPE_ROOT_DATA_FOLDER
-    create_folder_if_not_present $HPE_RECORDS_ROOT_FOLDER
-    create_folder_if_not_present $HPE_LOGGING_FOLDER
+    create_folder_if_not_present $HPE_RECORDS_ROOT_FOLDER/mainnet
+    create_folder_if_not_present $HPE_RECORDS_ROOT_FOLDER/testnet
+    create_folder_if_not_present $HPE_RECORDS_ROOT_FOLDER/previewnet
+    create_folder_if_not_present $HPE_LOGGING_FOLDER/mainnet
+    create_folder_if_not_present $HPE_LOGGING_FOLDER/testnet
+    create_folder_if_not_present $HPE_LOGGING_FOLDER/previewnet
     return 0
 }
 
