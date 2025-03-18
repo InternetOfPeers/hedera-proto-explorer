@@ -2,9 +2,13 @@
 
 IMPORTANT ASSUMPTION: this procedure does not verify the signatures associated to the tx, nor that the downloaded record file and corresponding txs hashes! If you want to query a verified data source, use your own mirror node to download and verify the signatures associated to the record file.
 
-You need to configure [AWS CLI](https://aws.amazon.com/cli/) with your credentials for this tool to work correctly; it downloads files from AWS S3.
+To get all the information you need to configure [AWS CLI](https://aws.amazon.com/cli/) with your credentials for this tool to work correctly; it downloads files from AWS S3.
 
-## How to get transactions details via script
+Alternatively, you can download the (alpha and deprecated) state proofs from the mirror node, and get the record stream elements from there.
+Note that if a transaction generates child transactions, this method will only allow you to decode information for the parent transaction.
+Also keep in mind that state proofs will be removed soon, so don't rely on this script method too much ;)
+
+## How to get transactions details via AWS S3
 
 The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
 
@@ -119,6 +123,97 @@ You can also use a `testnet` parameter to switch network, like this:
 ```
 
 If you want to change the default values, edit the `config` file.
+
+## How to get transactions details via Mirror Node's state proofs
+
+The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
+
+Run the following script:
+
+```bash
+node proto-decode-transaction-via-mirror-node 0.0.513587@1714079813.090631706 mainnet
+```
+
+The output will be:
+
+```bash
+Processing transaction: 0.0.513587-1714079813-090631706
+Using mainnet mirror node
+=== Record information ===
+{
+  receipt: {
+    status: 'SUCCESS',
+    exchangeRate: {
+      currentRate: {
+        hbarEquiv: 30000,
+        centEquiv: 353419,
+        expirationTime: { seconds: '1714082400' }
+      },
+      nextRate: {
+        hbarEquiv: 30000,
+        centEquiv: 357345,
+        expirationTime: { seconds: '1714086000' }
+      }
+    }
+  },
+  transactionHash: 'ATGcMV0XrYmiI1ZpGmZ5l5IW4wC5XDB1jO5m9qlAmmXyW3ulLW7w5ZPZtsY5XwF+',
+  consensusTimestamp: { seconds: '1714079829', nanos: 44599703 },
+  transactionID: {
+    transactionValidStart: { seconds: '1714079813', nanos: 90631706 },
+    accountID: { accountNum: '513587' }
+  },
+  transactionFee: '68984744',
+  transferList: {
+    accountAmounts: [
+      { accountID: { accountNum: '3' }, amount: '1765339' },
+      { accountID: { accountNum: '98' }, amount: '60497465' },
+      { accountID: { accountNum: '800' }, amount: '6721940' },
+      { accountID: { accountNum: '513587' }, amount: '-68984744' }
+    ]
+  }
+}
+=== Transaction raw information ===
+{
+  signedTransactionBytes: 'ClgKGQoLCMWQq7EGEJrcmysSCAgAEAAYs6wfGAASBggAEAAYAxiAhK9fIgIIeDIAggMnEiUKCQgAEAAY0ciIAhIICAAQABizrB8aCQgAEAAYxaHpASID9vUBEswBCmQKIHcoN6wujR2qXjZWVOxzYBEP6a9i8khL0gIgT2JuXIKyGkDu761b22vDr/chkr5qaR/QqXPIdV2Y08/9S11nlChfAlMXZj0jIWgvFyN25CXzGB4rw+KhwOU8jPpnF3d+pBYACmQKIJUSLeJ3nu+RKNA7rsFMFMNOlg2U59HkwXbTZQS+/kh7GkDgkkcbbok6JZVz6dGgmaXQPTEz66X6EcvKx3BQID+b/BbwSaA6G9114w+olR3jqrIv2gMIAFkH6a+eexzVbCMK'
+}
+
+=== Signatures ===
+{
+  pubKeyPrefix: 'dyg3rC6NHapeNlZU7HNgEQ/pr2LySEvSAiBPYm5cgrI=',
+  ed25519: '7u+tW9trw6/3IZK+amkf0KlzyHVdmNPP/UtdZ5QoXwJTF2Y9IyFoLxcjduQl8xgeK8PiocDlPIz6Zxd3fqQWAA==',
+  pubKeyPrefixHex: '772837ac2e8d1daa5e365654ec7360110fe9af62f2484bd202204f626e5c82b2'
+}
+{
+  pubKeyPrefix: 'lRIt4nee75Eo0DuuwUwUw06WDZTn0eTBdtNlBL7+SHs=',
+  ed25519: '4JJHG26JOiWVc+nRoJml0D0xM+ul+hHLysdwUCA/m/wW8EmgOhvddeMPqJUd46qyL9oDCABZB+mvnnsc1WwjCg==',
+  pubKeyPrefixHex: '95122de2779eef9128d03baec14c14c34e960d94e7d1e4c176d36504befe487b'
+}
+
+=== Body ===
+{
+  transactionID: {
+    transactionValidStart: { seconds: '1714079813', nanos: 90631706 },
+    accountID: { shardNum: '0', realmNum: '0', accountNum: '513587' },
+    scheduled: false
+  },
+  nodeAccountID: { shardNum: '0', realmNum: '0', accountNum: '3' },
+  transactionFee: '200000000',
+  transactionValidDuration: { seconds: '120' },
+  memo: '',
+  cryptoApproveAllowance: {
+    nftAllowances: [
+      {
+        tokenId: { shardNum: '0', realmNum: '0', tokenNum: '4334673' },
+        owner: { shardNum: '0', realmNum: '0', accountNum: '513587' },
+        spender: { shardNum: '0', realmNum: '0', accountNum: '3821765' },
+        serialNumbers: [ '31478' ]
+      }
+    ]
+  }
+}
+```
+
+You can omit the `mainnet` parameter to execute the analysis on the testnet.
 
 ## How to manually get transactions details
 
