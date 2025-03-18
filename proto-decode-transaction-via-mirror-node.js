@@ -7,12 +7,6 @@ const DEBUG_MODE = process.env.DEBUG === "true" || false;
 // Set up debug logging with the DEBUG_MODE flag
 setupDebugLogging(DEBUG_MODE);
 
-/**
- * Extended console.log that deeply inspects objects with colors
- * @param {...any} args - Arguments to inspect and log
- */
-console.deepLog = (...args) => args.forEach((obj) => console.log(require("util").inspect(obj, false, null, true)));
-
 // Check if transaction ID is provided
 if (process.argv.length < 3) {
   console.error("Please provide a transaction ID.");
