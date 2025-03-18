@@ -8,7 +8,17 @@ Alternatively, you can download the (alpha and deprecated) state proofs from the
 Note that if a transaction generates child transactions, this method will only allow you to decode information for the parent transaction.
 Also keep in mind that state proofs will be removed soon, so don't rely on this script method too much ;)
 
-## How to get transactions details via AWS S3
+## How to get transactions details via AWS S3 or GCP Storage
+
+### Setup
+
+You have two options:
+
+1. Set `HPE_STORAGE_PROVIDER="aws"` in the `config` file and initialize your AWS CLI with your credentials. Those credentials will be billed for the requests.
+
+2. Set `HPE_STORAGE_PROVIDER="gcp"` and a billing project ID (`HPE_GCP_BILLING_PROJECT_ID`) in the `config` file. Initialize the GCP CLI with your credentials.
+
+### Usage
 
 The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706) and mirror node (i.e., 0.0.513587-1714079813-090631706) transaction ID format.
 

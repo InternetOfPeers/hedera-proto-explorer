@@ -1,5 +1,6 @@
 #!/bin/bash
-# i.e., ./download-file.sh recordstreams/record0.0.15/2024-01-24T00_00_08.001730738Z.rcd_sig /tmp/foo.rcd_sig
+# i.e., ./examine.sh 0.0.4628257-1742237538-087066692
+
 # TODO check file existence
 source $(dirname "$0")/utils/common.sh
 
@@ -12,7 +13,7 @@ test "$3" == "overwrite-if-present" && HPE_FORCE_DOWNLOAD="true"
 
 test $HPE_NETWORK = "testnet" &&\
     HPE_MIRROR_NODE_API_BASE_URL=$HPE_TESTNET_MIRROR_NODE_API_BASE_URL &&\
-    HPE_S3_BUCKET_NAME=$HPE_TESTNET_S3_BUCKET_NAME
+    HPE_BUCKET_NAME=$HPE_TESTNET_BUCKET_NAME
 
 HPE_TXID=$(echo $1 | sed -r "s/@(.*[0-9])\./-\1-/")
 HPE_TXID_LOGFILE="$HPE_LOGGING_FOLDER/$HPE_TXID.txt"
@@ -32,6 +33,8 @@ HPE_TRANSACTIONS_COUNT=$(echo $HPE_TRANSACTIONS | jq ".transactions | length")
 
 echo "$(print_timestamp) ⚙ Transactions with the same ID: $HPE_TRANSACTIONS_COUNT"
 
+# TODO: same txid can have sub txs with different consensus timestamps, for example in case of scheduled tx,
+# so, getting only the first one can lead to error in find all the txs reported by the mirror node
 HPE_CONSENSUS_TIMESTAMP=$(echo $HPE_TRANSACTIONS | jq -r '.transactions[0].consensus_timestamp ')
 
 HPE_RECORDFILENAME_GZ=$(curl -s "$HPE_MIRROR_NODE_API_BASE_URL/blocks?limit=1&order=asc&timestamp=gte:$HPE_CONSENSUS_TIMESTAMP" | jq -r ".blocks[].name")
@@ -41,8 +44,10 @@ HPE_RECORDFILEPATH="./records/$HPE_RECORDFILENAME"
 HPE_RECORDFILEPATH_GZ="./records/$HPE_RECORDFILENAME_GZ"
 
 [ $HPE_FORCE_DOWNLOAD == "true" ] || [ ! -s "${HPE_RECORDFILEPATH}" ] &&\
-    download_file_from_aws_s3 recordstreams/record0.0.3/$HPE_RECORDFILENAME_GZ $HPE_RECORDFILEPATH_GZ &&
+    download_file $HPE_RECORD_SOURCE_FOLDER/$HPE_RECORDFILENAME_GZ $HPE_RECORDFILEPATH_GZ &&\
     gzip -df $HPE_RECORDFILEPATH_GZ
+
+[ ! -s "${HPE_RECORDFILEPATH}" ] && echo "$(print_timestamp) ⛔ File $HPE_RECORDFILEPATH is empty! A previous download may have been failed. Exiting." && exit 101
 
 echo "" > $HPE_TXID_LOGFILE
 echo "" > $HPE_TXID_LOGFILE_COLOR
