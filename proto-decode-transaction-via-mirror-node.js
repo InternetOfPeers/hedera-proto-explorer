@@ -31,23 +31,23 @@ if (transactionId.includes("@")) {
   console.debug(`Converted transaction ID: ${transactionId}`);
 }
 
-// Default to testnet, unless mainnet is specified
-const useMainnet = process.argv[3] === "mainnet" ? true : false;
+// Default to mainnet, unless testnet is specified
+const useTestnet = process.argv[3] === "testnet" ? true : false;
 
 /**
  * Main function to process a transaction ID
  * @param {string} transactionId - The transaction ID to process
- * @param {boolean} useMainnet - Whether to use mainnet (true) or testnet (false)
+ * @param {boolean} useTestnet - Whether to use testnet (true) or mainnet (false)
  */
-async function processTransaction(transactionId, useMainnet) {
+async function processTransaction(transactionId, useTestnet) {
   try {
     console.log(`Processing transaction: ${transactionId}`);
-    console.log(`Using ${useMainnet ? "mainnet" : "testnet"} mirror node`);
+    console.log(`Using ${useTestnet ? "testnet" : "mainnet"} mirror node`);
 
     // Fetch state proof
     const stateProof = await fetchStateProof(
       transactionId,
-      useMainnet ? "https://mainnet.mirrornode.hedera.com" : "https://testnet.mirrornode.hedera.com"
+      useTestnet ? "https://testnet.mirrornode.hedera.com" : "https://mainnet.mirrornode.hedera.com"
     );
     console.debug("State proof fetched successfully");
 
@@ -200,4 +200,4 @@ function decodeProtobufAndPrintData(transactionBuffer, recordBuffer) {
 }
 
 // Run the main function
-processTransaction(transactionId, useMainnet);
+processTransaction(transactionId, useTestnet);

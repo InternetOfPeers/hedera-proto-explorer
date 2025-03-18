@@ -131,7 +131,7 @@ The script support both *human-friendly* (i.e., 0.0.513587@1714079813.090631706)
 Run the following script:
 
 ```bash
-node proto-decode-transaction-via-mirror-node 0.0.513587@1714079813.090631706 mainnet
+node proto-decode-transaction-via-mirror-node 0.0.513587@1714079813.090631706
 ```
 
 The output will be:
@@ -213,7 +213,7 @@ Using mainnet mirror node
 }
 ```
 
-You can omit the `mainnet` parameter to execute the analysis on the testnet.
+You can add the `testnet` parameter to execute the analysis on the testnet.
 
 ## How to manually get transactions details
 
