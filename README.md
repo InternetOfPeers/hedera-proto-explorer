@@ -225,6 +225,67 @@ Using mainnet mirror node
 
 You can add the `testnet` parameter to execute the analysis on the testnet.
 
+## How to get scheduled transactions details via Mirror Node's APIs
+
+Run the following script:
+
+```bash
+node proto-decode-schedule-via-mirror-node.js 0.0.226412
+```
+
+The output will be:
+
+```bash
+Processing scheduleID: 0.0.226412
+Using mainnet mirror node
+=== Transaction details ===
+{
+  transactionFee: '100000000',
+  memo: 'Shocked, I tell you!',
+  cryptoTransfer: {
+    transfers: {
+      accountAmounts: [
+        { accountID: { accountNum: '98' }, amount: '1' },
+        { accountID: { accountNum: '950' }, amount: '-1' }
+      ]
+    }
+  }
+}
+```
+
+You can add the `testnet` parameter to execute the analysis on the testnet.
+
+Please consider scheduled transactions expire, so don't be surprised if the example above does not work with the mentioned scheduleID. You can retrieve a list of current active schedules via Mirror Node's APIs, like this:
+
+```bash
+❯ curl --silent https://mainnet.mirrornode.hedera.com/api/v1/schedules | jq
+{
+  "schedules": [
+    {
+      "admin_key": null,
+      "deleted": false,
+      "consensus_timestamp": "1620327749.254652999",
+      "creator_account_id": "0.0.950",
+      "executed_timestamp": "1620327749.254653000",
+      "expiration_time": null,
+      "memo": "",
+      "payer_account_id": "0.0.950",
+      "schedule_id": "0.0.226412",
+      "signatures": [
+        {
+          "consensus_timestamp": "1620327749.254652999",
+          "public_key_prefix": "Qg==",
+          "signature": "SUZHg7uixmb5MjubWNSs4H1FRQdgHwgj9KEe0XWQD4yvD9W+AAQkZBy+FdOnYbz/bfTT3op++Opg\nfGKKRqYKAg==",
+          "type": "ED25519"
+        }
+      ],
+      "transaction_body": "CIDC1y8SFFNob2NrZWQsIEkgdGVsbCB5b3UhShMKEQoGCgIYYhACCgcKAxi2BxAB",
+      "wait_for_expiry": false
+    },
+    ...
+}
+```
+
 ## How to manually get transactions details
 
 1. First you want the tx hash
